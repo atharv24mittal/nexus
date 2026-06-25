@@ -42,12 +42,17 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=["*"],
     allow_credentials=False,
-    allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
-    expose_headers=["X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset",
-                     "X-Request-ID", "Retry-After"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=[
+        "X-RateLimit-Limit",
+        "X-RateLimit-Remaining",
+        "X-RateLimit-Reset",
+        "X-Request-ID",
+        "Retry-After",
+    ],
 )
 
 # Gzip compresses response bodies over the size threshold — a real, free
