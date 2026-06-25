@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+/*
+  NEXUS design tokens
+  --------------------
+  Visual identity grounded in the subject: an execution-aware agent that
+  traces, proves, and repairs code. Not a generic dark-mode SaaS palette —
+  drawn from oscilloscopes, debuggers, and proof assistants: warm phosphor
+  amber for "live/running", cool teal for "proved correct", muted rose for
+  "constraint violated", and a dusty blue for ambient/neutral state.
+
+  Light and dark variants share the same accent hues (amber/teal/rose/dusty)
+  so the personality of the UI doesn't change when you flip the toggle —
+  only the canvas around it does.
+*/
+:root,
+[data-theme="dark"] {
+  --color-bg: #0E1116;
+  --color-surface: #161A21;
+  --color-surface-2: #1D222B;
+  --color-surface-3: #242A35;
+  --color-border: #2A2F3A;
+  --color-border-bright: #3A4252;
+
+  --color-ink: #EDEFF3;
+  --color-ink-dim: #9099AC;
+  --color-ink-faint: #5B6376;
+
+  --color-amber: #FFB454;
+  --color-amber-dim: #8A6A3A;
+  --color-teal: #5EEAD4;
+  --color-teal-dim: #2F6E64;
+  --color-rose: #FB7185;
+  --color-rose-dim: #7A3944;
+  --color-dusty: #7C9CBF;
+  --color-dusty-dim: #3D4F62;
+}
+
+[data-theme="light"] {
+  --color-bg: #F7F5F0;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F0EDE6;
+  --color-surface-3: #E7E3D9;
+  --color-border: #DDD8CC;
+  --color-border-bright: #C7C0B0;
+
+  --color-ink: #1B1A17;
+  --color-ink-dim: #5C5847;
+  --color-ink-faint: #8C8674;
+
+  --color-amber: #B5790F;
+  --color-amber-dim: #E8C896;
+  --color-teal: #157A6C;
+  --color-teal-dim: #A6DED3;
+  --color-rose: #C23B52;
+  --color-rose-dim: #F2C5CC;
+  --color-dusty: #3D6690;
+  --color-dusty-dim: #C2D4E5;
+}
+
+:root {
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-border-bright); }
+
+/* Visible keyboard focus everywhere — never silently remove outlines. */
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Trace-beam keyframes used by the live execution view */
+@keyframes trace-scan {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(var(--scan-distance, 200px)); opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.35; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, var(--color-surface) 25%, var(--color-surface-2) 37%, var(--color-surface) 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}

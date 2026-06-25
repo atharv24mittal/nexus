@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: nexus-backend
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false   # set manually in Render dashboard — never commit secrets
+      - key: LLM_MODEL
+        value: llama-3.3-70b-versatile
+      - key: MAX_REPAIR_ATTEMPTS
+        value: "5"
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://your-app.vercel.app
+      - key: RATE_LIMIT_SOLVE_MAX
+        value: "10"
+      - key: RATE_LIMIT_DEFAULT_MAX
+        value: "60"
+      - key: MAX_REQUEST_BODY_BYTES
+        value: "20000"
+      - key: DISABLE_DOCS
+        value: "false"
+      - key: ENVIRONMENT
+        value: production

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NEXUS — an execution-aware code intelligence engine. Generates code, simulates execution, formally verifies correctness, and repairs its own bugs using a memory of past fixes." />
+    <title>NEXUS — Execution-Aware Code Intelligence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <script>
+      // Runs synchronously, before first paint, so there is never a flash
+      // of the wrong theme while React/JS loads. Mirrors useTheme.js's
+      // logic exactly (localStorage -> system preference -> dark default).
+      (function () {
+        try {
+          var stored = localStorage.getItem('nexus:theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.setAttribute('data-theme', stored);
+            return;
+          }
+        } catch (e) { /* localStorage unavailable, fall through */ }
+        var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        document.documentElement.setAttribute('data-theme', prefersLight ? 'light' : 'dark');
+      })();
+    </script>
+
+    <style>
+      /* Instant-paint skeleton: shown before React/JS finishes loading so
+         there is never a blank canvas flash. Reads the SAME --color-* vars
+         the real app uses (set by the inline script above via data-theme),
+         so the skeleton already matches whichever theme is about to load. */
+      html, body { background: var(--color-bg, #0E1116); margin: 0; }
+      #boot-skeleton {
+        position: fixed; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 14px;
+        font-family: 'Inter', sans-serif; background: var(--color-bg, #0E1116);
+      }
+      #boot-skeleton .mark {
+        width: 40px; height: 40px; border-radius: 9px; background: var(--color-surface, #161A21);
+        border: 1px solid var(--color-border, #2A2F3A); display: flex; align-items: center; justify-content: center;
+      }
+      #boot-skeleton svg { width: 20px; height: 20px; }
+      #boot-skeleton .label { color: var(--color-ink-dim, #9099AC); font-size: 13px; letter-spacing: 0.02em; }
+      @keyframes boot-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+      #boot-skeleton .mark { animation: boot-pulse 1.4s ease-in-out infinite; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="boot-skeleton">
+        <div class="mark">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 22 L12 22 L15 10 L18 24 L21 16 L26 16" stroke="var(--color-amber, #FFB454)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="label">Loading NEXUS…</div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
